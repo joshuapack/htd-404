@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="ro-RO">
+	<head profile="http://gmpg.org/xfn/11">
+		<title>404 Error Pages</title>
+		<meta charset="utf-8"/>
+		<meta http-equiv="Content-Language" content="ro"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=8">
+		<link href='http://fonts.googleapis.com/css?family=Istok+Web|Chivo' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" media="all" href="<%%URL%%>/style.css" />
+		<link rel="stylesheet" type="text/css" media="all" href="<%%URL%%>/backgrounds.css" />
+		<link rel="stylesheet" type="text/css" media="all" href="<%%URL%%>/themes/gray/css/style.css" />
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('.searchInput input[type=text]').focus(function() { //onclick remove Search phrase if is default
+									if ($(this).val() == 'Search') {
+										$(this).val('');
+									}
+									$('.errorSearch').hide();
+				}).focusout(function () {
+									if ($(this).val() == '') {
+										$(this).val('Search');
+									}		
+				});
+				$('.searchButton').mouseover(function() { //search buttom mouseover effect
+									$(this).addClass('searchButtonHover');
+				}).mouseout(function () {
+									$(this).removeClass('searchButtonHover');		
+				});
+				$('.search form').submit(function() { // search form validation
+					var errs = 0;
+					if ( $('.searchInput input[type=text]').val() == 'Search' || $('.searchInput input[type=text]').val().length < 3 ) {
+						errs = 1;
+					}
+					if (errs == 1 ) {
+						$('.errorSearch').show();
+						return false;
+					}
+				});
+		});
+		</script>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div class="mainWrapper">
+				<div class="leftHolder">
+					<a href="/" title="Robotik Logo" class="logo">Robotik Logo</a>
+					<div class="errorNumber">404</div> 
+				</div>
+				<div class="rightHolder">
+					<div class="message"><p>The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p></div>
+					<div class="robotik"><img src="<%%URL%%>/images/robotik.png" alt="Oooops....we can't find that page." title="Oooops....we can't find that page." id="robot"></div>
+					<div class="tryToMessage">
+						Try to:
+						<ul>
+							<li>Use the search form</li>
+							<li>Go <a href="javascript:history.go(-1)" title="Back">back</a></li>
+						</ul>
+					</div>
+					<div class="search">
+						<span class="errorSearch">Please fill the search field</span>
+						<form action="/index.php" method="get">
+							<div class="searchInput">
+								<input type="text" name="s" value="Search" />
+							</div>
+							<div class="searchButton">
+								<input type="submit" name="submit" value="Go" />
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
