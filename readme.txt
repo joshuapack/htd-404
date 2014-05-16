@@ -44,8 +44,8 @@ Update to v0.1.1
 
 == Changelog ==
 
-= 0.1 =
-* First release
-
 = 0.1.1 =
 * Fixed 500 error and timeout issue
+
+= 0.1 =
+* First release
