@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: JoshuaPack
 Donate link: http://www,htdsoftware.com/
-Tags: comments, spam
+Tags: 404, error, static, page
 Requires at least: 3.0.1
 Tested up to: 3.9.1
 Stable tag: 4.3
@@ -19,7 +19,7 @@ This plugin does it!
 
 == Installation ==
 
-1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
+1. Upload files to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Under Settings > 404 Settings Enter full URL of page you want the 404 page to show. Can be a html page!
 
