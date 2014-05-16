@@ -35,7 +35,7 @@ Currently not. We hope to have this in a later version.
 
 = Any bugs? =
 
-Some Wordpress websites are getting a 500 error. Discontinue use of this extension until we can fix. thanks
+Update to v0.1.1
 
 == Screenshots ==
 
@@ -46,3 +46,6 @@ Some Wordpress websites are getting a 500 error. Discontinue use of this extensi
 
 = 0.1 =
 * First release
+
+= 0.1.1 =
+* Fixed 500 error and timeout issue

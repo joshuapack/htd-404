@@ -3,12 +3,12 @@
  * Plugin Name: HTD 404
  * Plugin URI: http://www.htdsoftware.com
  * Description: This plugin will simply allow you to point to a page to serve up if you get a 404 error. Also it marks it as 404 
- * Version: 0.1
+ * Version: 0.1.1
  * Author: Joshua Pack
  * Author URI: http://www.joshuapack.com
  */
 
-load_plugin_textdomain( 'HTD', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
+//load_plugin_textdomain( 'HTD', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
 
 add_action('admin_init', 'HTD_404_register_settings');
 add_action('admin_menu', 'HTD_404_add_menu');
@@ -17,14 +17,14 @@ add_filter('plugin_action_links', 'HTD_404_add_settings_link', 10, 2 );
 
 function HTD_404_add_menu(){
     //Add menu page
-    add_options_page(__('404 Setup','HTD'), __('404 Settings','HTD'), 'manage_options', 'HTD_404', 'HTD_404_render_options');
+    add_options_page('404 Setup', '404 Settings', 'manage_options', 'HTD_404', 'HTD_404_render_options');
 }
 
 function HTD_404_register_settings(){
     register_setting("HTD_404_options_group", 'HTD_404_options_group', 'HTD_404_options_validate');
-    add_settings_section('HTD_404_main', __('404 Settings','HTD'), 'HTD_404_section_text', 'HTD_404');
-    add_settings_field('HTD_404_url', __('URL to show','HTD'), 'HTD_404_setting_string', 'HTD_404', 'HTD_404_main');
-    add_settings_field('HTD_404_page', __('Edit HTML Page','HTD'), 'HTD_404_setting_page', 'HTD_404', 'HTD_404_main');
+    add_settings_section('HTD_404_main', '404 Settings', 'HTD_404_section_text', 'HTD_404');
+    add_settings_field('HTD_404_url', 'URL to show', 'HTD_404_setting_string', 'HTD_404', 'HTD_404_main');
+    add_settings_field('HTD_404_page', 'Edit HTML Page', 'HTD_404_setting_page', 'HTD_404', 'HTD_404_main');
 }
 
 function HTD_404_options_validate($input){
@@ -44,13 +44,13 @@ function HTD_404_options_validate($input){
 
 function HTD_404_section_text(){
     ?>
-    <p><?php _e('This plugin checks to see if browser is going to hit a 404 HTTP error.<br/>If it does we prevents Wordpress to do any other processing and sends the user the contents of the page you specify.','HTD'); ?></p>
+    <p><?php echo 'This plugin checks to see if browser is going to hit a 404 HTTP error.<br/>If it does we prevents Wordpress to do any other processing and sends the user the contents of the page you specify.'; ?></p>
     <?php
 }
 
 function HTD_404_setting_string(){
     $options = get_option('HTD_404_options_group');
-    echo "<input id='plugin_text_string' name='HTD_404_options_group[HTD_404_url]' style='width:80%;' type='text' value='{$options['HTD_404_url']}' /> <p class='howto'>".__('Note: If this option is left empty the plugin will show our default 404 page.','HTD')."</p>";
+    echo "<input id='plugin_text_string' name='HTD_404_options_group[HTD_404_url]' style='width:80%;' type='text' value='{$options['HTD_404_url']}' /> <p class='howto'>".'Note: If this option is left empty the plugin will show our default 404 page.'."</p>";
 }
 
 function HTD_404_setting_page(){
@@ -66,7 +66,7 @@ function HTD_404_setting_page(){
 			$fileEdit = false;
 		}
 	}
-	if ($fileEdit) echo "<textarea id='plugin_text_page' name='HTD_404_options_group[HTD_404_page]' style='width:80%;height:200px;'>{$options['HTD_404_page']}</textarea> <p class='howto'>".__('Note: If URL is blank above, this is the html that will be displayed. Use <i><%%URL%%>/</i> for plugin URL path','HTD')."</p>";
+	if ($fileEdit) echo "<textarea id='plugin_text_page' name='HTD_404_options_group[HTD_404_page]' style='width:80%;height:200px;'>{$options['HTD_404_page']}</textarea> <p class='howto'>".'Note: If URL is blank above, this is the html that will be displayed. Use <i><%%URL%%>/</i> for plugin URL path'."</p>";
 }
 
 function HTD_404_render_options(){
@@ -75,7 +75,7 @@ function HTD_404_render_options(){
    <form action="options.php" method="post">
         <?php settings_fields('HTD_404_options_group'); ?>
         <?php do_settings_sections( 'HTD_404' ); ?>
-        <p class="submit"><input type="submit" value="<?php _e('Save 404 Settings','HTD'); ?>" title="<?php _e('Save 404 Settings','HTD'); ?>" class="button-primary"></p>
+        <p class="submit"><input type="submit" value="<?php echo 'Save 404 Settings'; ?>" title="<?php echo 'Save 404 Settings'; ?>" class="button-primary"></p>
     </form>
     </div>
 	<?php
@@ -90,15 +90,19 @@ function determine_if_HTD_404(&$arr){
         $options = get_option('HTD_404_options_group');
         if(!empty($options['HTD_404_url']) || $options['HTD_404_url'] != ''){
             $url_redirect = $options['HTD_404_url'];
-        }else{
+        } else {
             //By default redirect to home
-            $url_redirect = site_url()."/wp-content/plugins/HTD-404/404.html";
+            $url_redirect = site_url()."/wp-content/plugins/htd-404/404.html";
         }
         header( "HTTP/1.1 404 Not Found" );
-		$page404 = str_replace("<%%URL%%>", site_url()."/wp-content/plugins/HTD-404", file_get_contents($url_redirect));
-		echo $page404;
-		//echo "404 error page";
-        //header('Location: '.$url_redirect);
+		if (function_exists('file_get_contents')) {
+			$pageContents = file_get_contents($url_redirect, 10);
+			$page404 = str_replace('<%%URL%%>', site_url()."/wp-content/plugins/htd-404", $pageContents);
+			echo $page404;
+		} else {
+			echo "404 error page";
+			header('Location: '.$url_redirect);
+		}
         die;
     }
 }
