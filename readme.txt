@@ -33,6 +33,10 @@ No, we keep the response to 404, so that search engines know.
 
 Currently not. We hope to have this in a later version.
 
+= Any bugs? =
+
+Some Wordpress websites are getting a 500 error. Discontinue use of this extension until we can fix. thanks
+
 == Screenshots ==
 
 1. Not sure how screenshots work
