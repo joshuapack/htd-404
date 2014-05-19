@@ -35,7 +35,7 @@ Currently not. We hope to have this in a later version.
 
 = Any bugs? =
 
-Update to v0.1.1
+Update to v0.1.2
 
 == Screenshots ==
 
