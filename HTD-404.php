@@ -3,7 +3,7 @@
  * Plugin Name: HTD 404
  * Plugin URI: http://www.htdsoftware.com
  * Description: This plugin will simply allow you to point to a page to serve up if you get a 404 error. Also it marks it as 404 
- * Version: 0.1.1
+ * Version: 0.1.2
  * Author: Joshua Pack
  * Author URI: http://www.joshuapack.com
  */
@@ -31,7 +31,7 @@ function HTD_404_options_validate($input){
     //Autocomplete URL, just in case
     $url_redirect = $input['HTD_404_url'];
 	if(!empty($url_redirect)) {
-		if(strpos($url_redirect,'http://')===false){
+		if(strpos($url_redirect,'http://')===false && strpos($url_redirect,'https://')===false){
 			$url_redirect = 'http://'.$url_redirect;
 		}
 		$validated['HTD_404_url'] = $url_redirect;

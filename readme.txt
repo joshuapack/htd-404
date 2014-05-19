@@ -1,6 +1,6 @@
 === Plugin Name ===
 Contributors: JoshuaPack
-Donate link: http://www,htdsoftware.com/
+Donate link: http://www.htdsoftware.com/
 Tags: 404, error, static, page
 Requires at least: 3.0.1
 Tested up to: 3.9.1
@@ -43,6 +43,9 @@ Update to v0.1.1
 2. This is the second screen shot
 
 == Changelog ==
+
+= 0.1.2 =
+* Bug fix to allow HTTPS urls
 
 = 0.1.1 =
 * Fixed 500 error and timeout issue
