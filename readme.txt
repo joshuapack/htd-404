@@ -3,19 +3,26 @@ Contributors: JoshuaPack
 Donate link: http://www.htdsoftware.com/
 Tags: 404, error, static, page
 Requires at least: 3.0.1
-Tested up to: 3.9.1
-Stable tag: 4.3
+Tested up to: 4.1
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-404 pages not working? Would you like to have a custom 404 page. Would you like the 404 page to be dynamic or static? This plugin does it!
+This plugin will simply allow you to point to a page to serve up if you get a 404 error. Also it marks it as 404.
 
 == Description ==
 
-404 pages not working? 
-Would you like to have a custom 404 page. 
-Would you like the 404 page to be dynamic or static? 
+Why choose this plugin?
+
+* 404 pages not working? 
+* Would you like to have a custom 404 page? 
+* Would you like the 404 page to be dynamic or static? 
+
 This plugin does it!
+
+This a rebel plugin that does not use Wordpress's 404 hook. It was developed for themes or plugins that cause issues with the hook itself.
+
+For more information see FAQ page.
 
 == Installation ==
 
@@ -35,14 +42,20 @@ Currently not. We hope to have this in a later version.
 
 = Any bugs? =
 
-Update to v0.1.2
+Update to the latest version.
+
+No reports on any bugs.
 
 == Screenshots ==
 
-1. Not sure how screenshots work
-2. This is the second screen shot
+1. Under Settings > 404 Settings. Add a URL to show as your 404 page. If blank, you can edit the HTML page and serve that as your 404 page.
+2. The default HTML 404 Page
 
 == Changelog ==
+
+= 0.1.2.1 =
+* Added more details to description
+* Added screenshots to plugin
 
 = 0.1.2 =
 * Bug fix to allow HTTPS urls
