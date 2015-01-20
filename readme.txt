@@ -16,7 +16,8 @@ Why choose this plugin?
 
 * 404 pages not working? 
 * Would you like to have a custom 404 page? 
-* Would you like the 404 page to be dynamic or static? 
+* Would you like the 404 page to be a static page? 
+* Do you need to have a Wordpress CMS page as your 404 page?
 
 This plugin does it!
 
@@ -45,6 +46,9 @@ Currently not. We hope to have this in a later version.
 Update to the latest version.
 
 No reports on any bugs.
+Theoretically untested bug:
+* Dynamic login information may not show up on the 404 page. 
+Because this is untested, I am unsure if this causes an issue or not. If it does, add a support topic so I can test for you.
 
 == Screenshots ==
 
