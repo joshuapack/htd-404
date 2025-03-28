@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== HTD 404 ===
 Contributors: JoshuaPack
 Donate link: http://www.joshuapack.com/
 Tags: 404, error, static, page
