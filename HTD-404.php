@@ -1,9 +1,9 @@
 <?php
 /*
  * Plugin Name: HTD 404
- * Plugin URI: http://www.htdsoftware.com
+ * Plugin URI: http://www.joshuapack.com
  * Description: This plugin will simply allow you to point to a page to serve up if you get a 404 error. Also it marks it as 404 
- * Version: 0.1.2
+ * Version: 0.1.3
  * Author: Joshua Pack
  * Author URI: http://www.joshuapack.com
  */
@@ -23,6 +23,7 @@ function HTD_404_add_menu(){
 function HTD_404_register_settings(){
     register_setting("HTD_404_options_group", 'HTD_404_options_group', 'HTD_404_options_validate');
     add_settings_section('HTD_404_main', '404 Settings', 'HTD_404_section_text', 'HTD_404');
+    add_settings_field('HTD_404_page_id', 'Page Id', 'HTD_404_setting_string_id', 'HTD_404', 'HTD_404_main');
     add_settings_field('HTD_404_url', 'URL to show', 'HTD_404_setting_string', 'HTD_404', 'HTD_404_main');
     add_settings_field('HTD_404_page', 'Edit HTML Page', 'HTD_404_setting_page', 'HTD_404', 'HTD_404_main');
 }
@@ -37,6 +38,7 @@ function HTD_404_options_validate($input){
 		$validated['HTD_404_url'] = $url_redirect;
 	}
     $validated['HTD_404_page'] = $input['HTD_404_page'];
+    $validated['HTD_404_page_id'] = $input['HTD_404_page_id'];
 	$fileName = realpath(dirname(__FILE__))."/404.html";
 	file_put_contents($fileName,$validated['HTD_404_page']);
     return $validated;
@@ -48,9 +50,14 @@ function HTD_404_section_text(){
     <?php
 }
 
+function HTD_404_setting_string_id(){
+    $options = get_option('HTD_404_options_group');
+    echo "<input id='plugin_text_string' name='HTD_404_options_group[HTD_404_page_id]' style='width:80%;' type='text' value='{$options['HTD_404_page_id']}' />";
+}
+
 function HTD_404_setting_string(){
     $options = get_option('HTD_404_options_group');
-    echo "<input id='plugin_text_string' name='HTD_404_options_group[HTD_404_url]' style='width:80%;' type='text' value='{$options['HTD_404_url']}' /> <p class='howto'>".'Note: If this option is left empty the plugin will show our default 404 page.'."</p>";
+    echo "<input id='plugin_text_string' name='HTD_404_options_group[HTD_404_url]' style='width:80%;' type='text' value='{$options['HTD_404_url']}' /> <p class='howto'>".'Note: If these options are left empty the plugin will show our default 404 page.'."</p>";
 }
 
 function HTD_404_setting_page(){
@@ -85,21 +92,30 @@ function HTD_404_render_options(){
 function determine_if_HTD_404(&$arr){
     global $wp_query;
     
-    if($wp_query->is_404){
+    if ($wp_query->is_404) {
         
         $options = get_option('HTD_404_options_group');
-        if(!empty($options['HTD_404_url']) || $options['HTD_404_url'] != ''){
+        if (array_key_exists('HTD_404_url', $options) && (!empty($options['HTD_404_url']) || $options['HTD_404_url'] != '')) {
             $url_redirect = $options['HTD_404_url'];
         } else {
             //By default redirect to home
             $url_redirect = site_url()."/wp-content/plugins/htd-404/404.html";
         }
-        header( "HTTP/1.1 404 Not Found" );
-		if (function_exists('file_get_contents')) {
+        if (array_key_exists('HTD_404_page_id', $options) && !empty($options['HTD_404_page_id']) || $options['HTD_404_page_id'] != '') {
+            $page = get_post($options['HTD_404_page_id']);
+        }
+
+        if ($page) {
+            global $post;
+            $post = $page;
+            include get_page_template();
+        } else if (function_exists('file_get_contents')) {
+            header( "HTTP/1.1 404 Not Found" );
 			$pageContents = file_get_contents($url_redirect, 10);
 			$page404 = str_replace('<%%URL%%>', site_url()."/wp-content/plugins/htd-404", $pageContents);
 			echo $page404;
 		} else {
+            header( "HTTP/1.1 404 Not Found" );
 			echo "404 error page";
 			header('Location: '.$url_redirect);
 		}
